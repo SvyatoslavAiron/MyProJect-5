@@ -51,10 +51,10 @@ export default function Tbody() {
             <Input name="name" placeholder="Название" />
           </td>
           <td>
-					<Input name="count" type="number" placeholder="Количество" />
+					<Input name="count" number placeholder="Количество" />
           </td>
           <td>
-					<Input name="sum" type="number" placeholder="Сумма"/>
+					<Input name="sum" number placeholder="Сумма"/>
           </td>
         </tr>
       )}

@@ -6,7 +6,7 @@ export default function Input({
   errorMessage,
   placeholder,
   name,
-  
+  number,
 }) {
   const [formState, setFormState] = useState({
     name: "",
@@ -17,7 +17,13 @@ export default function Input({
   function onChange(e) {
     const value = e.target.value;
     const name = e.target.name;
-    setFormState((prev) => ({ ...prev, [name]: value }));
+    if (number) {
+      if (/^\d*$/.test(value)) {
+        setFormState((prev) => ({ ...prev, [name]: value }));
+      }
+    } else {
+      setFormState((prev) => ({ ...prev, [name]: value }));
+    }
   }
   return (
     <label className="input_container">

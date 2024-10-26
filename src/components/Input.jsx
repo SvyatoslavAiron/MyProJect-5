@@ -1,13 +1,9 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 
-export default function Input({
-  type,
-  error,
-  errorMessage,
-  placeholder,
-  name,
-  number,
-}) {
+const Input = forwardRef(function Input(
+  { error, errorMessage, placeholder, name, number, autoFocus },
+  ref
+) {
   const [formState, setFormState] = useState({
     name: "",
     count: 0,
@@ -28,13 +24,16 @@ export default function Input({
   return (
     <label className="input_container">
       <input
+        ref={ref}
         className={`input ${formState[name] ? "input_active" : ""}`}
         autoComplete="off"
-        type={type}
         data-error={error}
         name={name}
         onChange={onChange}
         value={formState[name]}
+        required
+        form="form"
+        autoFocus={autoFocus}
       />
       <p className="input_placeholder">{placeholder}</p>
       <p className="input_error" data-error={error}>
@@ -42,4 +41,6 @@ export default function Input({
       </p>
     </label>
   );
-}
+});
+
+export default Input;

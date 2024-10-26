@@ -224,3 +224,15 @@ button {
     }
   }
 }
+
+form {
+  button {
+    display: none;
+  }
+}
+
+::selection {
+  background-color: #a1a1aa3b;
+  color: #ddd;
+  box-shadow: #fff;
+}

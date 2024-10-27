@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "../components/layout/icon";
 import Input from "./Input";
 
@@ -26,6 +26,23 @@ export default function Tbody() {
 
     console.log("Форма успешно отправлена");
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && add) {
+      onFormSubmit(e);
+    }
+    if (e.key === "Escape" && add) {
+      setAdd(false)
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [add]);
 
   return (
     <tbody>
@@ -63,14 +80,19 @@ export default function Tbody() {
                     <Icon name="add" className="add-icon" />
                   </button>
                   <button title="Удалить элемент">
-                    <Icon name="delete" className="delete-icon" />
+                    <Icon name="cancel" className="cancel-icon" />
                   </button>
                 </div>
               </div>
             </div>
           </td>
           <td>
-            <Input ref={nameRef} name="name" placeholder="Наименование" autoFocus />
+            <Input
+              ref={nameRef}
+              name="name"
+              placeholder="Наименование"
+              autoFocus
+            />
           </td>
           <td>
             <Input

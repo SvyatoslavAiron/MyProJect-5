@@ -218,10 +218,16 @@ button {
   }
   &_error {
     display: none;
-    margin-left: 18px;
-    color: #ff5e5e;
-    margin-bottom: 5px;
-    font-size: 12px;
+    font-family: serif;
+    position: absolute;
+    background-color: #272b33;
+    font-weight: 400;
+    color: #d2d2d2;
+    transition: all ease-in-out 0.3s;
+    font-size: 16px;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 10px;
     &[data-error="true"] {
       display: block;
     }

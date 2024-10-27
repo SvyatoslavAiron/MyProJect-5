@@ -1,7 +1,7 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 
 const Input = forwardRef(function Input(
-  { error, errorMessage, placeholder, name, number, autoFocus },
+  { errorMessage, placeholder, name, number, autoFocus },
   ref
 ) {
   const [formState, setFormState] = useState({
@@ -9,6 +9,15 @@ const Input = forwardRef(function Input(
     count: 0,
     sum: 0,
   });
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (formState[name] === "") {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }, [formState]);
 
   function onChange(e) {
     const value = e.target.value;
@@ -37,7 +46,7 @@ const Input = forwardRef(function Input(
       />
       <p className="input_placeholder">{placeholder}</p>
       <p className="input_error" data-error={error}>
-        {errorMessage}
+        {errorMessage ? errorMessage : "!"}
       </p>
     </label>
   );

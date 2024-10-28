@@ -86,7 +86,6 @@ tbody {
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: 2px;
   border-radius: 6px;
   justify-content: space-between;
   background-color: #414144;
@@ -179,6 +178,15 @@ button {
     color: #c93636;
   }
 }
+.confirm-icon {
+  transform: rotate(2deg);
+  width: 22px;
+  height: 22px;
+  use {
+    color: green;
+    stroke: green;
+  }
+}
 
 .input {
   transition: all ease-in-out 0.3s;
@@ -198,6 +206,9 @@ button {
       font-size: 13px;
       bottom: 27px;
       left: 16px;
+      & + .input_error {
+        color: #ffffff;
+      }
     }
   }
   &_active {
@@ -210,6 +221,7 @@ button {
   }
   &_placeholder {
     position: absolute;
+    pointer-events: none;
     background-color: #272b33;
     bottom: 10px;
     left: 16px;
@@ -229,7 +241,7 @@ button {
     position: absolute;
     background-color: #272b33;
     font-weight: 400;
-    color: #d2d2d2;
+    color: #d2d2d2d8;
     transition: all ease-in-out 0.3s;
     font-size: 16px;
     transform: translateY(-50%);

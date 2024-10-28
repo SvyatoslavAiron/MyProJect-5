@@ -32,7 +32,7 @@ export default function Tbody() {
       onFormSubmit(e);
     }
     if (e.key === "Escape" && add) {
-      setAdd(false)
+      setAdd(false);
     }
   };
 
@@ -70,16 +70,16 @@ export default function Tbody() {
         <td>100</td>
       </tr>
       {add && (
-        <tr title="Двойной щелчок для изменения" role="button">
+        <tr>
           <td>
             <div>
               <div className="connect connect_vertical connect_horizontal"></div>
               <div className="wrapper-container">
                 <div className="button-wrapper">
-                  <button title="Создать дочерний элемент">
-                    <Icon name="add" className="add-icon" />
+                  <button form="form" type="submit" title="Подтвердить">
+                    <Icon name="confirm" className="confirm-icon" />
                   </button>
-                  <button title="Удалить элемент">
+                  <button title="Отменить" onClick={() => setAdd(false)}>
                     <Icon name="cancel" className="cancel-icon" />
                   </button>
                 </div>
@@ -109,9 +109,7 @@ export default function Tbody() {
               id="form"
               onSubmit={onFormSubmit}
               autoComplete="off"
-            >
-              <button className="form" form="form" type="submit"></button>
-            </form>
+            ></form>
           </td>
         </tr>
       )}

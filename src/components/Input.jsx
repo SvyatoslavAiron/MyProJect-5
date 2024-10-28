@@ -1,23 +1,10 @@
 import { forwardRef, useEffect, useState } from "react";
 
 const Input = forwardRef(function Input(
-  { errorMessage, placeholder, name, number, autoFocus },
+  { errorMessage, placeholder, name, autoFocus, formState, setFormState, onChange, number },
   ref
 ) {
-  const [formState, setFormState] = useState({
-    name: "",
-    count: 0,
-    sum: 0,
-  });
   const [error, setError] = useState(false);
-
-  useEffect(() => {
-    if (formState[name] === "") {
-      setError(true);
-    } else {
-      setError(false);
-    }
-  }, [formState]);
 
   function onChange(e) {
     const value = e.target.value;
@@ -30,6 +17,15 @@ const Input = forwardRef(function Input(
       setFormState((prev) => ({ ...prev, [name]: value }));
     }
   }
+
+  useEffect(() => {
+    if (formState[name] === "") {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }, [formState]);
+
   return (
     <label className="input_container">
       <input

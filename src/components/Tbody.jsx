@@ -2,11 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import Icon from "../components/layout/icon";
 import Input from "./Input";
 
-export default function Tbody() {
-  const [add, setAdd] = useState(false);
+export default function Tbody({ setAdd, add }) {
+  const [data, setData] = useState([]);
   const nameRef = useRef(null);
   const countRef = useRef(null);
   const sumRef = useRef(null);
+
+  const [formState, setFormState] = useState({
+    name: "",
+    count: 0,
+    sum: 0,
+  });
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +30,15 @@ export default function Tbody() {
       return;
     }
 
+    setData((prev) => [
+      ...prev,
+      { name: formState.name, count: formState.count, sum: formState.sum },
+    ]);
+    console.log(data);
+
     console.log("Форма успешно отправлена");
+    setFormState({ name: "", count: 0, sum: 0 });
+    setAdd(false);
   };
 
   const handleKeyDown = (e) => {
@@ -32,7 +46,7 @@ export default function Tbody() {
       onFormSubmit(e);
     }
     if (e.key === "Escape" && add) {
-      setAdd(false);
+      addCancel();
     }
   };
 
@@ -44,31 +58,45 @@ export default function Tbody() {
     };
   }, [add]);
 
+  const deleteItem = (index) => {
+    setData((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  function addCancel() {
+    setFormState({ name: "", count: 0, sum: 0 });
+    setAdd(false);
+  }
+
   return (
     <tbody>
-      <tr title="Двойной щелчок для изменения" role="button">
-        <td>
-          <div>
-            <div className="connect connect_vertical connect_horizontal"></div>
-            <div className="wrapper-container">
-              <div className="button-wrapper">
-                <button
-                  onClick={() => setAdd((prev) => !prev)}
-                  title="Создать дочерний элемент"
-                >
-                  <Icon name="add" className="add-icon" />
-                </button>
-                <button title="Удалить элемент">
-                  <Icon name="delete" className="delete-icon" />
-                </button>
+      {data.map((item, index) => (
+        <tr key={index}>
+          <td>
+            <div>
+              <div className="connect connect_vertical connect_horizontal"></div>
+              <div className="wrapper-container">
+                <div className="button-wrapper">
+                  <button
+                    title="Создать дочерний элемент"
+                    onClick={() => setAdd(true)}
+                  >
+                    <Icon name="add" className="add-icon" />
+                  </button>
+                  <button
+                    title="Удалить элемент"
+                    onClick={() => deleteItem(index)}
+                  >
+                    <Icon name="delete" className="delete-icon" />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-        <td>Элемент 1</td>
-        <td>10</td>
-        <td>100</td>
-      </tr>
+          </td>
+          <td>{item.name}</td>
+          <td>{item.count}</td>
+          <td>{item.sum}</td>
+        </tr>
+      ))}
       {add && (
         <tr>
           <td>
@@ -79,7 +107,7 @@ export default function Tbody() {
                   <button form="form" type="submit" title="Подтвердить">
                     <Icon name="confirm" className="confirm-icon" />
                   </button>
-                  <button title="Отменить" onClick={() => setAdd(false)}>
+                  <button title="Отменить" onClick={addCancel}>
                     <Icon name="cancel" className="cancel-icon" />
                   </button>
                 </div>
@@ -92,6 +120,8 @@ export default function Tbody() {
               name="name"
               placeholder="Наименование"
               autoFocus
+              formState={formState}
+              setFormState={setFormState}
             />
           </td>
           <td>
@@ -100,10 +130,19 @@ export default function Tbody() {
               name="count"
               number
               placeholder="Количество"
+              formState={formState}
+              setFormState={setFormState}
             />
           </td>
           <td>
-            <Input ref={sumRef} name="sum" number placeholder="Сумма" />
+            <Input
+              ref={sumRef}
+              name="sum"
+              number
+              placeholder="Сумма"
+              formState={formState}
+              setFormState={setFormState}
+            />
             <form
               noValidate
               id="form"

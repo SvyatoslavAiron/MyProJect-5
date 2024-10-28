@@ -1,12 +1,15 @@
 import Icon from "../components/layout/icon";
 
-export default function Thead() {
+export default function Thead({ setAdd }) {
   return (
     <thead>
       <tr>
         <th>
           <div>
-            <button title="Создать корневой элемент">
+            <button
+              title="Создать корневой элемент"
+              onClick={() => setAdd(true)}
+            >
               <Icon name="add" className="add-icon" />
             </button>
             <span>Уровень</span>

@@ -29,11 +29,9 @@ export default function Tbody({ setAdd, add }) {
       return;
     }
 
-    setData((prev) => [
-      ...prev,
-      { name: formState.name, count: formState.count, sum: formState.sum },
-    ]);
-    console.log(data);
+    //???????????????????????????????????????????????
+    const newData = { ...formState, children: [] };
+    setData((prev) => [...prev, newData]);
 
     console.log("Форма успешно отправлена");
     setFormState({ name: "", count: 0, sum: 0 });
@@ -72,7 +70,7 @@ export default function Tbody({ setAdd, add }) {
         <tr key={index}>
           <td>
             <div>
-              <div className="connect connect_vertical connect_horizontal"></div>
+              <div className="connect connect_vertical connect_horizontal connect_vertical_2"></div>
               <div className="wrapper-container">
                 <div className="button-wrapper">
                   <button

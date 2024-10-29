@@ -3,16 +3,17 @@ import Icon from "../components/layout/icon";
 import Input from "./Input";
 
 export default function Tbody({ setAdd, add }) {
-  const [data, setData] = useState([]);
-  const nameRef = useRef(null);
-  const countRef = useRef(null);
-  const sumRef = useRef(null);
-
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem("data")) || []
+  );
   const [formState, setFormState] = useState({
     name: "",
     count: 0,
     sum: 0,
   });
+  const nameRef = useRef(null);
+  const countRef = useRef(null);
+  const sumRef = useRef(null);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -30,16 +31,17 @@ export default function Tbody({ setAdd, add }) {
       return;
     }
 
-    setData((prev) => [
-      ...prev,
-      { name: formState.name, count: formState.count, sum: formState.sum },
-    ]);
-    console.log(data);
+    setData((prev) => [...prev, formState]);
 
     console.log("Форма успешно отправлена");
     setFormState({ name: "", count: 0, sum: 0 });
     setAdd(false);
   };
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(data));
+    console.log(data);
+  }, [data]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && add) {
@@ -58,8 +60,13 @@ export default function Tbody({ setAdd, add }) {
     };
   }, [add]);
 
-  const deleteItem = (index) => {
-    setData((prev) => prev.filter((_, i) => i !== index));
+  const onDelete = (index) => {
+    const confirmDelete = window.confirm(
+      "Вы уверены, что хотите удалить элемент вместе с дочерними?"
+    );
+    if (confirmDelete) {
+      setData((prev) => prev.filter((_, i) => i !== index));
+    }
   };
 
   function addCancel() {
@@ -84,7 +91,7 @@ export default function Tbody({ setAdd, add }) {
                   </button>
                   <button
                     title="Удалить элемент"
-                    onClick={() => deleteItem(index)}
+                    onClick={() => onDelete(index)}
                   >
                     <Icon name="delete" className="delete-icon" />
                   </button>

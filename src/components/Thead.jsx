@@ -1,4 +1,4 @@
-import Icon from "../components/layout/icon";
+import Icon from "../components/layout/Icon";
 
 export default function Thead({ setAdd }) {
   return (

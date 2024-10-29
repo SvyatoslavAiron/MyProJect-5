@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Icon from "../components/layout/icon";
+import Icon from "../components/layout/Icon";
 import Input from "./Input";
 
 export default function Tbody({ setAdd, add }) {
